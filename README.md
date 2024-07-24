@@ -1,43 +1,68 @@
-# Team Ionis-Paris 2024 Software Tool
+# safeRNA role and user guide 
 
-If your team competes in the [**Software & AI** village](https://competition.igem.org/participation/villages) or wants to
-apply for the [**Best Software Tool** prize](https://competition.igem.org/judging/awards), you **MUST** host all the
-code of your team's software tool in this repository, `main` branch. By the **Wiki Freeze**, a
-[release](https://docs.gitlab.com/ee/user/project/releases/) will be automatically created as the judging artifact of
-this software tool. You will be able to keep working on your software after the Grand Jamboree.
+## The problem
 
-> If your team does not have any software tool, you can totally ignore this repository. If left unchanged, this
-repository will be automatically deleted by the end of the season.
+The siRNAs produced are short, averaging between 21 and 24 nucleotides. They are highly specific, but their small size could lead to the targeting of undesired sequences present in transcriptomes by chance. The tool therefore aims to check that the sequences produced will target only the virus and no others.
 
+## Solution principle
 
+To address this issue and preserve the soil's diversity and especially the long neglected microbiome, we collected every available genomes about the taxa found in the French soil microbiome associated with *Beta vulgaris* culture. Then all those genomes would be aligned with the interfering RNA sequence planned to be engineered to identify which can be kept and which have to go. Only the coding sequences from organisms are retrieved as siRNA only target RNA. To limit the risk of sequencing errors interefering, multiple sequencing from the same strain/species is allowed.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might
-be unfamiliar with (for example your team wiki). A list of Features or a Background subsection can also be added here.
-If there are alternatives to your project, this is a good place to list differentiating factors.
+## The programs
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew.
-However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing
-specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a
-specific context like a particular programming language version or operating system or has dependencies that have to be
-installed manually, also add a Requirements subsection.
+The tool combines three main programs, all written in Python : 
+- main.py : from precursor sequences, calculate all the possible siRNA sequences that can be obtained using a sliding window.
+- get_data.py : allow to download all coding sequences from a given taxon in NCBI
+- align.py : makes the alignment between siRNA sequences and every genome available in the genome database gained using get_data.py and generates the report
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of
-usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably
-include in the README.
+### main.py
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+Written in python, works with terminal command lines. 2 arguments :
+- `dir_in` : The directory with the sequences fasta files of precursor RNA sequences 
+- `dir_out` : The directory in which all the possible siRNA fasta files will be generated
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started.
-Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps
-explicit. These instructions could also be useful to your future self.
+```BASH
+python main.py ~/DIR/IN ~/DIR/OUT
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce
-the likelihood that the changes inadvertently break something. Having instructions for running tests is especially
-helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+### get_data.py
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Written in python, works with terminal command lines and a side file containing the list of taxon's name for which genomes have to be downloaded. Two arguments are required : 
+- the PATH to the .txt file containing the list of taxon's name.
+- The PATH to the directory where you want the database to be downloaded
+
+```BASH
+python get_data.py ~/PATH/TO/data_to_get.txt ~/PATH/TO/DATABASE/DIR
+```
+
+A report summarizing the number of genomes dowloaded by taxa is also generated.
+
+### align.py
+
+Written in python and is the core of the program. Takes four arguments in the command line :
+- siRNA_seq : The directory where siRNA sequences fasta file can be found
+- genome_database : the directory where the NCBI genomes have been downloaded
+- out_dir : the directory in which the program will work (**keep it empty**)
+- reports : the directory in which reports will be generated per taxa and **where the final report named _general_report.txt will be generated**
+
+**The file _general_report.txt contains only information about the HITS that were detected**
+
+```BASH
+python align.py ~/PATH/TO/SIRNA/DIR ~/PATH/TO/GENOME/DOWNLOADED ~/PATH/TO/OUT_DIR ~/PATH/TO/REPORT/DIR
+```
+
+**Format of the file _general_report.txt** <br>
+
+The report contains 8 different columns
+
+Column name | Column meaning
+--- | ---
+precursor vs target | Give the name of the precursor from which siRNA are obtained versus the target
+precursor | name of the precursor protein 
+target | ID of the genome targeted
+taxa | the taxon database in which the target was classified when downloaded
+number of hits | number of siRNA sequences with a hit in the targeted genome
+list of siRNA ID | the ID of the siRNA sequence that hit the targeted genome
+Path to genome file | The path to the genome file in the database locally built from NCBI
+link | URL directing toward the assembly webpage on NCBI
+
