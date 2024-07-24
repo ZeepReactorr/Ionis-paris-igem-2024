@@ -62,9 +62,4 @@ if __name__ == "__main__":
         sep_seq(seq_list, out)
         print("outed")
 
-    align.blast(os.path.join(os.getcwd(), "siRNA_seq"),
-                os.path.join(os.getcwd(), "blast_db"),
-                os.path.join(os.getcwd(), "out_dir"))
-    print("blasted")
-    align.report(os.path.join(os.getcwd(), "out_dir"))
-    print("report")
+
