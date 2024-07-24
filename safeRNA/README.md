@@ -27,10 +27,12 @@ python main.py ~/DIR/IN ~/DIR/OUT
 
 ### get_data.py
 
-Written in python, works with terminal command lines and a side file containing the list of taxon's name for which genomes have to be downloaded. Only one argument is required : the PATH to the .txt file containing the list of taxon's name.
+Written in python, works with terminal command lines and a side file containing the list of taxon's name for which genomes have to be downloaded. Two arguments are required : 
+- the PATH to the .txt file containing the list of taxon's name.
+- The PATH to the directory where you want the database to be downloaded
 
 ```BASH
-python get_data.py ~/PATH/TO/data_to_get.txt
+python get_data.py ~/PATH/TO/data_to_get.txt ~/PATH/TO/DATABASE/DIR
 ```
 
 A report summarizing the number of genomes dowloaded by taxa is also generated.
