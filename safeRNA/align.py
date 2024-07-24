@@ -38,7 +38,7 @@ def report(blast_dir, db, rep_dir, seq_dir, description = "Analyzes blast report
     filename = f"{db}_report.txt"
     with open(os.path.join(rep_dir, filename), "a", encoding='utf-8') as report:
         for hit in hit_count:
-            si_ori, seq_target = ''.join(hit.rna_ID.split('_vs_')[0]).split('siRNA_from_')[0], hit.rna_ID.split('_vs_')[1]
+            si_ori, seq_target = hit.rna_ID.split('_vs_')[0].split('siRNA_from_')[1], hit.rna_ID.split('_vs_')[1]
             link = f"https://www.ncbi.nlm.nih.gov/datasets/genome/{seq_target}/"
             report.write(f"{hit.rna_ID}\t{si_ori}\t{seq_target}\t{db}\t{hit.total}\t{hit.target_hit}\t{hit.seq_dir}\t{link}\n")
     
@@ -76,7 +76,7 @@ def analyzer(rep_dir):
     hits = []
     for file in os.listdir(rep_dir):
         with open(os.path.join(rep_dir, file)) as report:
-            report_lines = [line for line in report.readlines() if line.split('\t')[1] != '0']
+            report_lines = [line for line in report.readlines() if line.split('\t')[4] != '0']
         
         hits += report_lines
 
@@ -102,10 +102,3 @@ def main(siRNA_seq, genome_database, out_dir, reports):
 if __name__ == "__main__":
     siRNA_seq, genome_database, out_dir, reports = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
     main(siRNA_seq, genome_database, out_dir, reports)
-
-"""
-siRNA_seq = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\Génomique\predict_siRNA\siRNA_seq"
-genome_database = r"D:\iGEM\genome_database"
-out_dir = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\Génomique\predict_siRNA\out_dir"
-reports = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\Génomique\predict_siRNA\reports"
-"""
