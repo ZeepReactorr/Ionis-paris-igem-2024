@@ -10,7 +10,7 @@ To address this issue and preserve the soil's diversity and especially the long 
 
 ## The programs
 
-The tool combines three main programs, all written in Python : 
+The tool combines three main programs, all written in Python 3.11.7 : 
 - main.py : from precursor sequences, calculate all the possible siRNA sequences that can be obtained using a sliding window.
 - get_data.py : allow to download all coding sequences from a given taxon in NCBI
 - align.py : makes the alignment between siRNA sequences and every genome available in the genome database gained using get_data.py and generates the report
@@ -64,5 +64,8 @@ taxa | the taxon database in which the target was classified when downloaded
 number of hits | number of siRNA sequences with a hit in the targeted genome
 list of siRNA ID | the ID of the siRNA sequence that hit the targeted genome
 Path to genome file | The path to the genome file in the database locally built from NCBI
-link | URL directing toward the assembly webpage on NCBI
+link | URL directing toward the Genome Assembly Description
 
+## References
+
+Camacho, C., Coulouris, G., Avagyan, V., Ma, N., Papadopoulos, J., Bealer, K., and Madden, T.L. 2009. BLAST+: architecture and applications. BMC Bioinformatics, 10, 421.
