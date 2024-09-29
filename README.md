@@ -21,16 +21,3 @@ Documentation and last code version will be available on October 2nd.
 - PrediRNA: Prediction of BYV mutation and effect on siRNA efficiency. <br>
 - SafeRNA : Tool leveraging NCBI's datasets tool to ensure specificity of siRNAs toward BYV.
 
-## References
-
-[1] Hossain R, Menzel W, Lachmann C, Varrelmann M. New insights into virus yellows distribution in Europe and effects of beet yellows virus, beet mild yellowing virus, and beet chlorosis virus on sugar beet yield following field inoculation. Plant Pathol. 2021;70(3):584-593. doi:10.1111/ppa.13306
-
-[2] Margaritopoulos JT, Kati AN, Voudouris CC, Skouras PJ, Tsitsipis JA. Long-term studies on the evolution of resistance of Myzus persicae (Hemiptera: Aphididae) to insecticides in Greece. Bull Entomol Res. 2021;111(1):1-16. doi:10.1017/S0007485320000334
-
-[3] Grimmer MK, Bean KMR, Qi A, Stevens M, Asher MJC. The action of three Beet yellows virus resistance QTLs depends on alleles at a novel genetic locus that controls symptom development. Plant Breed. 2008;127(4):391-397. doi:10.1111/j.1439-0523.2008.01515.x
-
-[4] Hauer M, Hansen AL, Manderyck B, et al. Neonicotinoids in sugar beet cultivation in Central and Northern Europe: Efficacy and environmental impact of neonicotinoid seed treatments and alternative measures. Crop Prot. 2017;93:132-142. doi:10.1016/j.cropro.2016.11.034
-
-[5] Zhang D, Lu S. Human exposure to neonicotinoids and the associated health risks: A review. Environ Int. 2022;163(March):107201. doi:10.1016/j.envint.2022.107201
-
-[6] Zhan J, Meyers BC. Plant Small RNAs: Their Biogenesis, Regulatory Roles, and Functions. Annu Rev Plant Biol. 2023;74:21-51. doi:10.1146/annurev-arplant-070122-035226
