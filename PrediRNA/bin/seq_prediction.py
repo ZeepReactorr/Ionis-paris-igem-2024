@@ -1,6 +1,6 @@
 from seed_main import init_alignement
 
-import re, math, warnings, sys
+import re, math, warnings, sys, os
 import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
@@ -9,6 +9,8 @@ from collections import Counter
 
 sns.set_theme(rc={'figure.figsize':(12,8)})
 warnings.filterwarnings('ignore')
+
+BASE_DIR = '\\'.join(os.path.dirname(os.path.abspath(__file__)).split('\\')[:-1])
 
 def parser(path : str) -> pd.DataFrame:
     """
@@ -50,7 +52,7 @@ def parser(path : str) -> pd.DataFrame:
 
 def poisson_conserved_codon(S:list, 
                             y : int, 
-                            l = 0.0224, 
+                            l :float, 
                             multiple_S = False,
                             sub = 10
                             ) -> list:
@@ -84,7 +86,8 @@ def poisson_conserved_codon(S:list,
     return all_s
 
 def show_multiple_poisson(df : pd.DataFrame, 
-                          YEARS : int
+                          YEARS : int,
+                          l : float
                           ) -> None:
     """
     Display the distribution Poisson Law for sequences with more than
@@ -102,7 +105,7 @@ def show_multiple_poisson(df : pd.DataFrame,
         if score not in passed :
             passed.append(score)
         else:
-            values[df.iat[index, 0]] = poisson_conserved_codon(score, YEARS, multiple_S=True)
+            values[df.iat[index, 0]] = poisson_conserved_codon(score, YEARS, l, multiple_S=True)
 
     for key, value in values.items():
         ax1.plot(range(0, 10), value, label=key)
@@ -111,12 +114,15 @@ def show_multiple_poisson(df : pd.DataFrame,
     ax1.set_ylabel('Probability')
     ax1.set_title(f"Probability of a number of double substitutions happening in {YEARS} year")
 
-    plt.savefig(fr"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\figures\event_substitution\event_sub_poisson_distribution_cycle2_{YEARS}y.png")
+    image = f"event_sub_poisson_distribution_cycle2_{YEARS}y.png"
+    FIG_PATH = os.path.join(BASE_DIR, "figures", image)
+    plt.savefig(FIG_PATH)
     
 
 def show_poisson(df : pd.DataFrame, 
                  dico_num_cons : dict, 
-                 YEARS : int
+                 YEARS : int,
+                 l :float
                  ) -> None:
     
     """
@@ -127,7 +133,7 @@ def show_poisson(df : pd.DataFrame,
     The Y axis corresponds to the probability of k substitutions happening.
     """
 
-    dico_plot_S = {dico_num_cons[s] : poisson_conserved_codon(s, YEARS) for s in df['coef_conservation'].unique()}
+    dico_plot_S = {dico_num_cons[s] : poisson_conserved_codon(s, YEARS, l) for s in df['coef_conservation'].unique()}
     df[f"proba_seq_>=1_sub_{YEARS}y"] = pd.Series()
 
     #print(sum([sum(i[1:len(i)]) for key, i in dico_plot_S.items()]))
@@ -144,8 +150,11 @@ def show_poisson(df : pd.DataFrame,
     ax1.set_ylabel('Probability')
     ax1.set_title(f"Probability of a number of substitutions happening in {YEARS} year in one sequence for the entropy value in the sequence")
     ax1.legend(ncols=2)
+
+    image = f"event_sub_poisson_distribution_cycle1_{YEARS}y.png"
+    FIG_PATH = os.path.join(BASE_DIR, "figures", "event_substitution", image)
     
-    plt.savefig(fr"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\figures\event_substitution\event_sub_poisson_distribution_cycle1_{YEARS}y.png")
+    plt.savefig(FIG_PATH)
 
 def coef_calc(df : pd.DataFrame, max_S : float) -> tuple:
     """
@@ -235,7 +244,9 @@ def fasta_forge(list_df : list,
     The file is named after the number of years and number of cycles undergone.
     """
     for index, df in enumerate(list_df):
-        with open(fr"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\{index+1}sub_{YEARS}y_RNA_pol.fasta", 'w', encoding='utf-8') as fastafile:
+        filename = f"{index+1}sub_{YEARS}y_RNA_pol.fasta"
+        FILE_PATH = os.path.join(BASE_DIR, "output", filename)
+        with open(FILE_PATH, 'w', encoding='utf-8') as fastafile:
             for elt in range(0, len(df.index)):
                 fastafile.write(f">{df.iat[elt,0]}|{df.iat[elt,7]}\n{''.join(df.iat[elt,1])}\n")
     return 0
@@ -247,8 +258,11 @@ def csv_forge(liste_df : list,
     Creates a csv file from the dataframe containing all the sequences.
     The file is named after the number of years and number of cycles undergone.
     """
+    
     for index, df in enumerate(liste_df):
-        df.to_csv(fr"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\{index+1}sub_{YEARS}y_RNA_pol.csv")
+        csv_name = f"{index+1}sub_{YEARS}y_RNA_pol.csv"
+        PATH_CSV = os.path.join(BASE_DIR, "output", csv_name)
+        df.to_csv(PATH_CSV)
     return 0
 
 def sort_all_df(liste_df : list, 
@@ -259,20 +273,25 @@ def sort_all_df(liste_df : list,
     """
     return [df.sort_values(by=f"proba_seq_>=1_sub_{YEARS}y", ascending=False) for df in liste_df]
 
-def main(MSA_PATH : str, cycles : int, y : int, forge = True):
+def main(MSA_PATH : str, 
+         cycles : int, 
+         y : int, 
+         l : float, 
+         seeds : str, 
+         forge = True):
     all_df =[]
     max_S = init_alignement(MSA_PATH)[1].max(axis=1).iloc[0]
-    df = parser(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\temp\seeds_RNA_pol.fasta")
+    df = parser(seeds)
     df = df[df['Shannon_entropy'] != df['Shannon_entropy'].max(axis=0)] # take out the non conserved substitutions
     df, dico_num_cons = coef_calc(df, max_S)
 
-    show_poisson(df, dico_num_cons, y)
+    show_poisson(df, dico_num_cons, y, l)
 
     all_df.append(df)
     
     for i in range(0, cycles):
         new_df = merge_seq(df, y)
-        show_multiple_poisson(new_df, y)
+        show_multiple_poisson(new_df, y, l)
         all_df.append(new_df)
 
     all_df = sort_all_df(all_df, y)
@@ -285,8 +304,6 @@ def main(MSA_PATH : str, cycles : int, y : int, forge = True):
         return all_df
 
 if __name__ == "__main__":
-    path, cycles, n_years = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+    path, cycles, n_years, l, seeds = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), float(sys.argv[4]), sys.argv[5]
     for n in range(1, n_years+1):
-        main(path, cycles, n)
-        
-"""main(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\ALL_seq_RNAPOL_ali.fasta", 0, 30)"""
+        main(path, cycles, n, l, seeds)
