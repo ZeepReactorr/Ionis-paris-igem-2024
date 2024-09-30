@@ -4,13 +4,13 @@
 
 A quarter of the worlds’ sugar is obtained from sugar beets, which are cultivated all around the world. It is especially important in France, and one of our biggest agricultural sector, from which is obtained the sugar we pour in our tea, coffee, or our cars, under the form of biofuel.
 
-The aphids Myzus persicae and Aphis fabae are the most threatening pests toward B. vulgaris. They can resist most pesticides, and are the main vectors for the Beet Yellow Virus (BYV) [2]. More than a third of the crops are affected yearly, and infected plants suffer a yield loss that can reach 50%, which is why agricultors are wary of these pests as they represent a major threat toward the crops [3].
+The aphids Myzus persicae and Aphis fabae are the most threatening pests toward B. vulgaris. They can resist most pesticides, and are the main vectors for the Beet Yellow Virus (BYV). More than a third of the crops are affected yearly, and infected plants suffer a yield loss that can reach 50%, which is why agricultors are wary of these pests as they represent a major threat toward the crops.
 
-Neonicotinoids (NEOs) prevail as the sole pesticides able to repel efficiently enough the aphids to protect the crops [3]. As a result, in 2016, about 100% of sugar beet seeds were undergoing preventive treatment of NEOs [4]. However, in 2018 it was confirmed that this pesticide had adverse effects on human and pollinators health. However there usage was not totally restricted in the EU until 2023, as years of derogation were granted especially for sugar beets [5]. Now deprived of their most efficient defense, european beet and beet farmers are most vulnerable to pests.
+Neonicotinoids (NEOs) prevail as the sole pesticides able to repel efficiently enough the aphids to protect the crops. As a result, in 2016, about 100% of sugar beet seeds were undergoing preventive treatment of NEOs. However, in 2018 it was confirmed that this pesticide had adverse effects on human and pollinators health. However there usage was not totally restricted in the EU until 2023, as years of derogation were granted especially for sugar beets. Now deprived of their most efficient defense, european beet and beet farmers are most vulnerable to pests.
 
 Our iGEM project was born to adress this issue and save the Sugar Beets ! This project is carried out by 12 students of SupBiotech in France, keen on challenges, adventure and agroecology !
 
-Our idea is to engineer precursors of small interfering RNAs (siRNA) that naturally exists in in plants as their main defense mechanism, and to target and destroy specifically viral RNA[6]. This biomimetic approach will be combined with a second one, hijacking the properties of viral capisdes and use them as vector for the RNAs to penetrate the plant.
+Our idea is to engineer precursors of small interfering RNAs (siRNA) that naturally exists in in plants as their main defense mechanism, and to target and destroy specifically viral RNA. This biomimetic approach will be combined with a second one, hijacking the properties of viral capisdes and use them as vector for the RNAs to penetrate the plant.
 
 ## Software description
 
