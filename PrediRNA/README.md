@@ -78,6 +78,8 @@ python ~/PATH/TO/sirna_align.py ~/PATH/TO/db_folder
 Breakdown of the arguments:
 - `~/PATH/TO/db_folder`: the path to the folders where your sequences ordered by year are stored.
 
+The program outpus a double plot figure which can be found in the `figures` folder.
+
 !! Important !! <br>
 For the calculation of the worst case scenario, we blace ourselves in the same time-frame as the one where the sequences were sequenced. However the worst case scenario is time-frame independent assuming a constant rate of substitution. Thus for example the results obtained in the time frame 1993-2021 would be identical to those of the time frame 2025-2053.
 
