@@ -4,7 +4,9 @@ from seed_init_codon_graph import CodonGraph
 import numpy as np
 from collections import Counter
 import pandas as pd
-import re
+import sys, os
+
+BASE_DIR = '\\'.join(os.path.dirname(os.path.abspath(__file__)).split('\\')[:-1])
 
 def init_alignement(path : str) -> tuple:
     """
@@ -150,12 +152,15 @@ def seed_sequence_generation(all_seq : list, consensus : list, trace : dict) -> 
 
     return seeds
 
-def temp_output(seeds : list, seq_annot : str) -> __file__:
-    with open(fr"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\temp\seeds_{seq_annot}.fasta", 'w', encoding='utf-8') as seed_file:
+def temp_output(seeds : list, seq_annot :
+                 str) -> __file__:
+    namefile = f"seeds_{seq_annot}.fasta"
+    path = os.path.join(BASE_DIR, 'temp', namefile)
+    with open(path, 'w', encoding='utf-8') as seed_file:
         for index, seed in enumerate(seeds):
             #columns = id protein | codon position | ref codon | Shannon's entropy
             seed_file.write(f">{seq_annot}_pred_{index}|{seed[1]}|{seed[2]['codon_consensus']}|{seed[2]['codon_entropy']}\n\
-{''.join(seed[0])}\n")
+            {''.join(seed[0])}\n")
 
 def main(MSA_PATH : str,  seq_annot = "", newest_path = "", param = 'consensus') -> int:
     """
@@ -179,8 +184,7 @@ def main(MSA_PATH : str,  seq_annot = "", newest_path = "", param = 'consensus')
     temp_output(sequences, seq_annot)
     return 0
 
-main(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\ALL_seq_RNAPOL_ali.fasta", 
-        "RNA_pol", 
-        r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\most_recent_BYV.fst",
-        "newest")
-    
+if __name__ == "__main__":
+    path_MSA, seq_annot, mode, BASE= sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+    main(path_MSA, seq_annot, BASE, mode)
+
