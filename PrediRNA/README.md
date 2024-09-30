@@ -1,4 +1,4 @@
-# PrediRNA - User guide
+# PrediRNA 
 
 ## The problem
 
@@ -61,7 +61,7 @@ The seeds can be found in the `temp` folder under .fasta and .csv format for mor
 The second step for sequence predictions is runned as follows:
 
 ```
-python ~/PATH/TO/seq_prediction.py ~/PATH/TO/MSA.fasta cycles duration rate-sub
+python ~/PATH/TO/seq_prediction.py ~/PATH/TO/MSA.fasta cycles duration rate-sub ~/PATH/TO/seeds.fasta
 ```
 
 Let's break down the arguments:
@@ -69,6 +69,9 @@ Let's break down the arguments:
 - `cycles`: number of mutations cycle (we advise to keep under 2 to avoid too long runtime depending on the sample)
 - `duration`: how many years would you like to study
 - `rate-sub`: The rate of substitution of your sequence
+- `~/PATH/TO/seeds.fasta`: Path to the seeds generated in the first step.
+
+The output can be found in the `output` folder in .fasta and .csv format for more extensive informations.
 
 Finally for the efficiency prediction, make sure you followed the instructions for the database creation in the Prerequisite. The program is ran as follow:
 ```
@@ -77,8 +80,6 @@ python ~/PATH/TO/sirna_align.py ~/PATH/TO/db_folder
 
 Breakdown of the arguments:
 - `~/PATH/TO/db_folder`: the path to the folders where your sequences ordered by year are stored.
-
-The program outpus a double plot figure which can be found in the `figures` folder.
 
 !! Important !! <br>
 For the calculation of the worst case scenario, we blace ourselves in the same time-frame as the one where the sequences were sequenced. However the worst case scenario is time-frame independent assuming a constant rate of substitution. Thus for example the results obtained in the time frame 1993-2021 would be identical to those of the time frame 2025-2053.
