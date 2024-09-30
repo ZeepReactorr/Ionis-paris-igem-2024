@@ -8,6 +8,10 @@ The main vector for the Beet Yellows Virus (BYV) is the aphid Myzus persicae. Ca
 
 We combine population dynamics, agent-based model and lattice-visualization to calculate the diffusion of aphids throughout the year in the French territory in order to have a rough appreciation of its migration behaviour using lattitude and longitude as its input. Those coordinates could very well be the coordinates of a farmer's culture for example, giving him a rough idea of when to apply pesticides. Aphidisperse was developped <b>from scratch</b> and does not rely on any external program to run its simulation. It is command line based, however a GUI is currently being developped to provide an easier use.
 
+## Prerequisite
+
+You will need to install ffmpeg in the Aphidisperse folder for the program to create the video. You can download the corresponding release here : https://ffmpeg.org/download.html
+
 ## Getting started
 
 First clone the repository
