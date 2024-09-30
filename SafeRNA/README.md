@@ -15,6 +15,28 @@ The tool combines three main programs, all written in Python :
 - get_data.py : allow to download all coding sequences from a given taxon in NCBI
 - align.py : makes the alignment between siRNA sequences and every genome available in the genome database gained using get_data.py and generates the report
 
+## Prerequisite
+
+safeRNA bases its functionnality of downloading massively the genomes on the datasets tool from NCBI, which can be downloaded here (https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/). Make sure to have the tool as an environment variable, alternatively, you can place the datasets.exe file in the `genome_database` folder.
+BLAST is used for the alignment and can be downloaded following instructions here : 
+
+### Getting started
+
+First clone the repository
+```
+git clone https://gitlab.igem.org/2024/software-tools/ionis-paris/
+```
+
+Move into the SafeRNA directory
+```
+cd ionis-paris/SafeRNA
+```
+
+Install the necessary packages
+```
+pip install -r requirements.txt
+```
+
 ### main.py
 
 Written in python, works with terminal command lines. 2 arguments :
