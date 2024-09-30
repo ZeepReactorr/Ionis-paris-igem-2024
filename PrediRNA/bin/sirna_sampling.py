@@ -2,6 +2,8 @@ import pandas as pd
 import os
 import random as rd
 
+BASE_DIR = '\\'.join(os.path.dirname(os.path.abspath(__file__)).split('\\')[:-1])
+
 def init_frames(path :str) -> list:
     return [pd.read_csv(os.path.join(path, file), index_col="Unnamed: 0") for file in os.listdir(path) if file.endswith('.csv') == True]
 
@@ -38,14 +40,14 @@ def gen_sampling(all_df :
     return liste_all_samples
 
 def write_year_0(ref, batch):
-    path = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\simulation"
+    path = os.path.join(BASE_DIR, "output","simulation")
     
     with open(os.path.join(path, "year_0.fasta"), 'w', encoding='utf-8') as file:
         for index in range(0, batch):
             file.write(f">initial_seq\n{ref}\n")
 
 def write_year_1(df : pd.DataFrame) -> None:
-    path = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\simulation"
+    path = os.path.join(BASE_DIR, "output","simulation")
     
     with open(os.path.join(path, "year_1.fasta"), 'w', encoding='utf-8') as file:
         for index in range(0, len(df.index)):
@@ -63,7 +65,7 @@ def fasta_forge(year : int,
     <sequence>
 
     """
-    path = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\simulation"
+    path = os.path.join(BASE_DIR, "output","simulation")
     name = f"year_{year}.fasta"
     with open(os.path.join(path, name), 'w', encoding='utf-8') as file:
         for index in df.index:
@@ -116,7 +118,7 @@ def adjust_df(liste_df : list) -> list:
     return liste_df
 
 def sample_seq(refseq : str, 
-               path = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output", 
+               path = os.path.join(BASE_DIR, "output","simulation"), 
                batch = 5
                ):
     """
