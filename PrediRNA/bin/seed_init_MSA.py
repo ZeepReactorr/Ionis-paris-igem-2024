@@ -279,13 +279,3 @@ class Alignment:
         sh_list = {col : np.log2(len(letter_list)) + np.sum(df[col]*np.log2(df[col])) for col in df.columns}
 
         return pd.DataFrame(data=sh_list, index=["Entropy"])
-
-"""
-ali = Alignment(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\ALL_seq_RNAPOL_ali.fasta")
-mat, dicomat = ali.init_codon()
-count_codon = ali.counter(mat)
-df = ali.calc_PSSM(count_codon, CODONS_LIST)
-print(df)
-print(ali.Shanon(df, CODONS_LIST))
-
-"""
