@@ -2,4 +2,4 @@ matplotlib==3.8.3
 seaborn==0.13.2
 pandas==2.2.1
 geopandas==0.14.4
-shapely==1.26.4
+shapely==2.0.4
