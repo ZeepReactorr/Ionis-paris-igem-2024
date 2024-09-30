@@ -2,7 +2,7 @@ from sirna_init import load_seq, sep_seq, LHrna
 from sirna_sampling import sample_seq
 
 import pandas as pd
-import os
+import os, sys
 from Bio import Seq
 from matplotlib import pyplot as plt
 import seaborn as sns
@@ -12,6 +12,10 @@ import warnings
 
 sns.set_theme(rc={'figure.figsize':(12,8)})
 warnings.filterwarnings('ignore')
+
+BASE_DIR = '\\'.join(os.path.dirname(os.path.abspath(__file__)).split('\\')[:-1])
+SIMU_DIR = os.path.join(BASE_DIR, "output", "simulation")
+FIGURE_DIR = os.path.join(BASE_DIR, "figures", "sirna_prediction.png")
 
 def init_siRNA(path : str
                ) -> list:
@@ -43,7 +47,7 @@ def select_target(directory : str,
     if latest == True :
         print("================== You are using the latest sequencing data for your analysis. ==================\n")
     elif latest == False :
-        print("================== You are using the most wanted sequencing data for your analysis. ==================\n")
+        print("================== You are using the most ancient sequencing data for your analysis. ==================\n")
 
     return os.path.join(directory, sorted(os.listdir(directory), key = lambda x:int(x.split('.')[0]), reverse=latest)[0])
 
@@ -246,7 +250,7 @@ def display_proportion(pred : pd.DataFrame,
     ax.set_xlabel("Time (y)")
     ax.set_title("Evolution of the efficiency of siRNA generated from p21\ntargeting the BYV sequence depending on time.")
     
-    plt.show()
+    plt.savefig(FIGURE_DIR)
     
 
 def calc_intercept(low_bound : int, 
@@ -354,7 +358,7 @@ def display_simulation(df : pd.DataFrame,
 def main_simulation(db_dir : str, 
                     ax1 : plt.Axes,
                     latest_target = True, 
-                    simu_path = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\output\simulation",
+                    simu_path = SIMU_DIR,
                     starting_date = 1993,
                     number_attackers = 1
                     ) -> None:
@@ -393,8 +397,8 @@ def main_simulation(db_dir : str,
                                 number_attackers = number_attackers)
 
 def main(db_dir : str, 
-         latest_target : bool, 
-         simu = True
+         simu : bool = False,
+         latest_target : bool = False, 
          ):
     """
     Activating function for the processes.
@@ -428,4 +432,6 @@ def main(db_dir : str,
     
     return 0
 
-main(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\db_p21", False, False)
+if __name__=="__main__":
+    PATH = sys.argv[1]
+    main(PATH)
