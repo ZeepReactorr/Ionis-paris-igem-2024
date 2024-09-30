@@ -29,3 +29,6 @@ A rudimentary GUI will appear, with a search bar. Just type your keywords, and v
 
 Another easy way is to access the tool through the streamlit release, available at this link : https://igemteamsearch.streamlit.app/ <br>
 The app may go down due to not being used often (for now!).
+
+Finally, a stand-alone application with a rudimentary GUI can be downloaded from this link: https://github.com/ZeepReactorr/webapp_iGEM_TS/tags <br>
+We do not have access to a developper key, thus Windows defender is likely to refuse installation. 
