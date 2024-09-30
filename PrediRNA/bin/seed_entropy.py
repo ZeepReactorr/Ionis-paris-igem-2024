@@ -4,10 +4,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import os, sys
 
 sns.set_theme(rc={'figure.figsize':(12,8)})
 
-PATH_MSA_BYV = r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\alignment_all_seq\ALL_seq_RNAPOL_ali.fasta"
+BASE_DIR = '\\'.join(os.path.dirname(os.path.abspath(__file__)).split('\\')[:-1])
+FIGURE_DIR = os.path.join(BASE_DIR, "figures", "shanon_entropy_heatmap.png")
+
 AA_LIST = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', 'X'] 
 NUC_LiST = ['A', 'T', 'C', 'G', '-']
 CODONS_LIST = {
@@ -132,7 +135,7 @@ def display_entropy(df_nuc : pd.DataFrame, df_pro : pd.DataFrame, df_cod : pd.Da
     ax3.set_title("Heatmap of Shanon's Entropy for the BYV's MSA showing the relative conservation of nucleotides\nat each position for the RdRP conserved sequence")
 
     fig.tight_layout()
-    plt.savefig(r"C:\Subpbiotech_cours\BT4\iGEM\Dry_lab\mutation_prediction\figures\full_BYV_genome_shanon_entropy_and_correlation_heatmap.png")
+    plt.savefig(FIGURE_DIR)
 
 def main_nuc(Ali : Alignment) -> pd.DataFrame:
     """
@@ -161,7 +164,7 @@ def main_codon(Ali : Alignment) -> pd.DataFrame:
     Sh_entropy = calc_Shanon_entropy(Ali, _PSSM, CODONS_LIST)    
     return Sh_entropy
 
-def main():
+def main(PATH_MSA_BYV):
     """
     main activating function.
 
@@ -176,4 +179,6 @@ def main():
     display_entropy(nuc_entropy, pro_entropy, cod_entropy)
     return 0
 
-main()
+if __name__ == "__main__":
+    PATH_MSA = sys.argv[1]
+    main(PATH_MSA)
